@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>My Habit Tracker</title>
+<title>Bloom</title>
 <link rel="apple-touch-icon" href="icon.png">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css"/>
 <style>
@@ -31,9 +31,22 @@ h1{font-size:20px;font-weight:500;margin-bottom:1.25rem;}
 .metric{background:var(--surface2);border-radius:var(--r-md);padding:1rem;}
 .metric-label{font-size:12px;color:var(--text-muted);margin-bottom:6px;}
 .metric-val{font-size:22px;font-weight:500;}
+
+/* QUOTE */
 .quote-card{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r-lg);padding:1.25rem 1.5rem;margin-bottom:1rem;border-left:3px solid var(--sage);}
 .quote-card-text{font-size:15px;line-height:1.75;font-style:italic;color:var(--text);margin-bottom:.5rem;}
 .quote-card-attr{font-size:12px;color:var(--text-muted);text-align:right;}
+
+/* REMINDERS at top of overview */
+.reminder-overview-list{display:flex;flex-direction:column;gap:6px;}
+.reminder-overview-item{display:flex;align-items:center;gap:10px;padding:.65rem .85rem;background:var(--surface2);border-radius:var(--r-md);transition:opacity .2s;}
+.reminder-overview-item.checked{opacity:.45;}
+.reminder-overview-item.checked .reminder-ov-text{text-decoration:line-through;color:var(--text-muted);}
+.reminder-ov-check{width:22px;height:22px;border-radius:50%;border:1.5px solid var(--border);background:transparent;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:13px;transition:all .15s;}
+.reminder-ov-check.done{background:var(--sage);border-color:var(--sage);color:#fff;}
+.reminder-ov-text{flex:1;font-size:13px;}
+
+/* WEEK / ENTRIES */
 .week-row{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r-md);padding:.75rem 1rem;margin-bottom:.5rem;display:flex;align-items:center;gap:10px;}
 .week-label{font-size:13px;font-weight:500;min-width:56px;}
 .week-dots{display:flex;gap:5px;flex:1;}
@@ -47,6 +60,7 @@ h1{font-size:20px;font-weight:500;margin-bottom:1.25rem;}
 .day-cell.has-entry{color:#fff;}
 .day-cell.empty{background:transparent;border-color:transparent;cursor:default;}
 .day-cell.empty:hover{transform:none;}
+
 input,textarea{width:100%;padding:8px 10px;border:0.5px solid var(--border);border-radius:var(--r-md);background:var(--surface);color:var(--text);font-size:13px;font-family:inherit;outline:none;transition:border-color .15s;}
 input:focus,textarea:focus{border-color:var(--sage);}
 textarea{resize:vertical;min-height:70px;line-height:1.5;}
@@ -57,29 +71,35 @@ textarea{resize:vertical;min-height:70px;line-height:1.5;}
 .btn.danger{border-color:#C1392B;color:#C1392B;}
 .btn.danger:hover{background:rgba(193,57,43,.08);}
 .btn.small{padding:5px 12px;font-size:12px;}
+
+/* SPECTRUM */
 .spectrum{display:flex;gap:3px;}
 .sb{flex:1;height:26px;border-radius:4px;cursor:pointer;border:2px solid transparent;transition:all .12s;}
 .sb.sel{border-color:var(--text);transform:scaleY(1.18);}
+
+/* HABIT CHECK */
 .habit-check-row{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:0.5px solid var(--border);}
 .habit-check-row:last-child{border-bottom:none;}
 .habit-check-info{flex:1;min-width:0;}
 .habit-check-name{font-size:13px;font-weight:500;margin-bottom:6px;}
-.habit-note-field{margin-top:6px;}
-.habit-note-field textarea{min-height:48px;font-size:12px;padding:6px 8px;}
 .hspectrum{display:flex;gap:3px;margin-top:6px;}
 .hsb{flex:1;height:20px;border-radius:3px;cursor:pointer;border:2px solid transparent;transition:all .1s;}
 .hsb.sel{border-color:var(--text);transform:scaleY(1.2);}
 .habit-check-done{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--border);background:transparent;cursor:pointer;font-size:14px;transition:all .15s;flex-shrink:0;margin-top:2px;}
 .habit-check-done.done{background:var(--sage);border-color:var(--sage);color:#fff;}
+
+/* REMINDER LIST (reminders tab) */
 .reminder-item{display:flex;align-items:center;gap:8px;padding:.6rem .75rem;background:var(--surface2);border-radius:var(--r-md);margin-bottom:6px;}
-.reminder-text{flex:1;font-size:13px;}
-.reminder-time-tag{font-size:12px;color:var(--text-muted);min-width:42px;text-align:right;}
+.reminder-item-text{flex:1;font-size:13px;}
+
 .form-row{margin-bottom:.75rem;}
 .form-label{font-size:12px;color:var(--text-muted);margin-bottom:4px;display:block;}
 .entry-card{border-left:3px solid;border-radius:var(--r-md);padding:.85rem 1rem;margin-bottom:.6rem;background:var(--surface2);cursor:pointer;}
 .entry-card:hover{opacity:.8;}
 .entry-date{font-size:11px;color:var(--text-muted);margin-bottom:4px;}
 .entry-note{font-size:13px;line-height:1.5;}
+
+/* MODAL */
 .modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:100;display:flex;align-items:center;justify-content:center;padding:1rem;}
 .modal{background:var(--surface);border-radius:var(--r-xl);padding:1.5rem;width:100%;max-width:460px;border:0.5px solid var(--border);max-height:90vh;overflow-y:auto;}
 .modal-title{font-size:16px;font-weight:500;margin-bottom:1.25rem;}
@@ -89,14 +109,10 @@ textarea{resize:vertical;min-height:70px;line-height:1.5;}
 .habit-modal-dot{width:14px;height:14px;border-radius:50%;flex-shrink:0;margin-top:3px;}
 .habit-modal-info{flex:1;min-width:0;}
 .habit-modal-name{font-size:13px;font-weight:500;}
-.habit-modal-note{font-size:12px;color:var(--text-muted);margin-top:3px;line-height:1.4;}
+.habit-modal-note{font-size:12px;color:var(--text-muted);margin-top:3px;line-height:1.4;display:none;}
 .habit-modal-score{font-size:12px;color:var(--text-muted);min-width:36px;text-align:right;margin-top:2px;}
-.habit-detail-note{font-size:13px;line-height:1.6;padding:.75rem;background:var(--surface2);border-radius:var(--r-md);margin-top:.5rem;}
-.reminder-popup{position:fixed;top:16px;left:50%;transform:translateX(-50%);z-index:200;background:var(--surface);border:0.5px solid var(--border);border-radius:var(--r-xl);padding:1rem 1.25rem;box-shadow:0 4px 24px rgba(0,0,0,.18);max-width:340px;width:90%;display:flex;align-items:flex-start;gap:10px;animation:slideDown .3s ease;}
-@keyframes slideDown{from{opacity:0;transform:translateX(-50%) translateY(-16px);}to{opacity:1;transform:translateX(-50%) translateY(0);}}
-.rp-icon{font-size:20px;color:var(--sage);flex-shrink:0;margin-top:1px;}
-.rp-text{flex:1;font-size:13px;line-height:1.5;}
-.rp-close{background:transparent;border:none;cursor:pointer;font-size:16px;color:var(--text-muted);flex-shrink:0;}
+
+/* PROGRESS */
 .hpr{margin-bottom:1.1rem;}
 .hpr-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;}
 .hpr-name{font-size:13px;font-weight:500;}
@@ -107,22 +123,24 @@ textarea{resize:vertical;min-height:70px;line-height:1.5;}
 .hpr-dot{width:10px;height:10px;border-radius:50%;border:0.5px solid var(--border);}
 .bar-chart-wrap{position:relative;width:100%;height:180px;}
 .chart-msg{text-align:center;padding:2rem;color:var(--text-muted);font-size:13px;}
-.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;}
 .month-nav{display:flex;align-items:center;gap:10px;}
 .month-nav-btn{width:28px;height:28px;border-radius:50%;border:0.5px solid var(--border);background:transparent;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;color:var(--text);}
 .month-nav-btn:hover{background:var(--surface2);}
+
+/* IMPORT/EXPORT */
+.import-drop{border:1.5px dashed var(--border);border-radius:var(--r-lg);padding:1.5rem;text-align:center;cursor:pointer;transition:border-color .2s;margin-bottom:.75rem;}
+.import-drop:hover,.import-drop.dragover{border-color:var(--sage);}
+.import-drop p{font-size:13px;color:var(--text-muted);margin-top:.5rem;}
+
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--sage);color:#fff;padding:9px 20px;border-radius:20px;font-size:13px;z-index:300;box-shadow:0 2px 12px rgba(0,0,0,.2);transition:opacity .4s;pointer-events:none;}
 .habit-row{display:flex;align-items:center;gap:10px;padding:.6rem .75rem;background:var(--surface2);border-radius:var(--r-md);margin-bottom:6px;}
 .habit-name{flex:1;font-size:13px;}
 .habit-streak{font-size:12px;color:var(--text-muted);min-width:60px;text-align:right;}
-.import-drop{border:1.5px dashed var(--border);border-radius:var(--r-lg);padding:1.5rem;text-align:center;cursor:pointer;transition:border-color .2s;margin-bottom:.75rem;}
-.import-drop:hover,.import-drop.dragover{border-color:var(--sage);}
-.import-drop p{font-size:13px;color:var(--text-muted);margin-top:.5rem;}
 </style>
 </head>
 <body>
 <div id="app">
-  <h1>My Habit Tracker</h1>
+  <h1>Bloom</h1>
   <nav class="nav">
     <button class="nav-btn active" onclick="showSection('overview',this)"><i class="ti ti-home"></i> Overview</button>
     <button class="nav-btn" onclick="showSection('log',this)"><i class="ti ti-edit"></i> Log Day</button>
@@ -132,13 +150,22 @@ textarea{resize:vertical;min-height:70px;line-height:1.5;}
     <button class="nav-btn" onclick="showSection('data',this)"><i class="ti ti-database"></i> Data</button>
   </nav>
 
+  <!-- OVERVIEW -->
   <div id="section-overview" class="section visible">
     <div id="overview-quote" class="quote-card"></div>
+
+    <!-- Reminders at top -->
+    <div class="card" id="overview-reminders-card">
+      <div class="card-title">Reminders</div>
+      <div class="reminder-overview-list" id="overview-reminder-list"></div>
+    </div>
+
     <div class="metrics" id="overview-metrics"></div>
     <div class="card"><div class="card-title">Weekly summaries</div><div id="week-summaries"></div></div>
     <div class="card"><div class="card-title">Recent entries</div><div id="recent-entries"></div></div>
   </div>
 
+  <!-- LOG DAY -->
   <div id="section-log" class="section">
     <div class="card">
       <div class="card-title">Log today — <span id="log-date-label"></span></div>
@@ -168,9 +195,10 @@ textarea{resize:vertical;min-height:70px;line-height:1.5;}
     </div>
   </div>
 
+  <!-- PROGRESS -->
   <div id="section-progress" class="section">
     <div class="card">
-      <div class="section-header">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:.75rem;">
         <div class="month-nav">
           <button class="month-nav-btn" onclick="changeMonth(-1)">&#8249;</button>
           <span id="month-label" style="font-size:14px;font-weight:500;min-width:130px;text-align:center;"></span>
@@ -191,6 +219,7 @@ textarea{resize:vertical;min-height:70px;line-height:1.5;}
     </div>
   </div>
 
+  <!-- HABITS -->
   <div id="section-habits" class="section">
     <div class="card">
       <div class="card-title">My habits (up to 10)</div>
@@ -204,21 +233,22 @@ textarea{resize:vertical;min-height:70px;line-height:1.5;}
     </div>
   </div>
 
+  <!-- REMINDERS -->
   <div id="section-reminders" class="section">
     <div class="card">
       <div class="card-title">Daily reminders</div>
       <div id="reminder-list"></div>
       <div style="margin-top:.75rem;">
         <div class="form-label">Add a reminder</div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end;">
-          <input id="new-reminder" placeholder="Reminder text..." maxlength="80" style="flex:2;min-width:140px;" onkeydown="if(event.key==='Enter')addReminder()"/>
-          <input id="new-reminder-time" type="time" style="flex:1;min-width:100px;"/>
+        <div style="display:flex;gap:8px;">
+          <input id="new-reminder" placeholder="Reminder text..." maxlength="80" onkeydown="if(event.key==='Enter')addReminder()"/>
           <button class="btn primary small" onclick="addReminder()">Add</button>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- DATA -->
   <div id="section-data" class="section">
     <div class="card">
       <div class="card-title">Export data</div>
@@ -227,7 +257,7 @@ textarea{resize:vertical;min-height:70px;line-height:1.5;}
     </div>
     <div class="card">
       <div class="card-title">Import data</div>
-      <p style="font-size:13px;color:var(--text-muted);margin-bottom:1rem;line-height:1.6;">Import a previously exported backup file. Your current data will be replaced with the imported data.</p>
+      <p style="font-size:13px;color:var(--text-muted);margin-bottom:1rem;line-height:1.6;">Import a previously exported backup file. Your current data will be replaced.</p>
       <div class="import-drop" id="import-drop" onclick="document.getElementById('import-file').click()" ondragover="event.preventDefault();this.classList.add('dragover')" ondragleave="this.classList.remove('dragover')" ondrop="handleFileDrop(event)">
         <i class="ti ti-upload" style="font-size:28px;color:var(--text-muted)"></i>
         <p>Click to choose a backup file, or drag and drop it here</p>
@@ -239,7 +269,6 @@ textarea{resize:vertical;min-height:70px;line-height:1.5;}
   </div>
 
   <div id="modal-container"></div>
-  <div id="reminder-popups"></div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
@@ -248,109 +277,49 @@ const SC=['#C1392B','#D0534A','#DC7A4A','#E09B52','#D4B35A','#B8C46A','#88BE6A',
 const stc=s=>SC[Math.min(9,Math.max(0,Math.round(s)-1))];
 
 const QUOTES=[
-  {q:"You are braver than you believe, stronger than you seem, and smarter than you think.",a:"A.A. Milne"},
-  {q:"Believe you can and you're halfway there.",a:"Theodore Roosevelt"},
-  {q:"You are enough, just as you are.",a:"Meghan Markle"},
-  {q:"The most courageous act is still to think for yourself. Aloud.",a:"Coco Chanel"},
   {q:"She believed she could, so she did.",a:"R.S. Grey"},
-  {q:"Start each day with a grateful heart.",a:"Unknown"},
-  {q:"You have within you right now everything you need to deal with whatever the world can throw at you.",a:"Brian Tracy"},
-  {q:"Be yourself — everyone else is already taken.",a:"Oscar Wilde"},
-  {q:"Your potential is endless. Go do what you were created to do.",a:"Unknown"},
-  {q:"Today is your opportunity to build the tomorrow you want.",a:"Ken Poirot"},
-  {q:"You are more powerful than you know and they fear the day you discover it.",a:"Nikita Gill"},
-  {q:"Difficult roads often lead to beautiful destinations.",a:"Zig Ziglar"},
-  {q:"Be proud of how far you've come and have faith in how far you can go.",a:"Unknown"},
-  {q:"Every day may not be good, but there is something good in every day.",a:"Alice Morse Earle"},
-  {q:"You did the best you could today — and that is always enough.",a:"Unknown"},
-  {q:"Rest if you must, but don't you quit.",a:"Edgar A. Guest"},
-  {q:"Stars can't shine without darkness.",a:"Unknown"},
-  {q:"Growth is not always loud. Sometimes it is quiet progress.",a:"Unknown"},
-  {q:"You are doing better than you think.",a:"Unknown"},
-  {q:"Even the longest journey begins with a single step.",a:"Lao Tzu"},
-  {q:"The secret of getting ahead is getting started.",a:"Mark Twain"},
-  {q:"Nothing is impossible. The word itself says I'm possible.",a:"Audrey Hepburn"},
-  {q:"I can and I will. Watch me.",a:"Carrie Green"},
-  {q:"You define your own life. Don't let other people write your story.",a:"Unknown"},
-  {q:"The question isn't who is going to let me; it's who is going to stop me.",a:"Ayn Rand"},
-  {q:"A strong woman looks a challenge dead in the eye and gives it a wink.",a:"Gina Carey"},
-  {q:"You never realize how strong you are until being strong is the only choice you have.",a:"Bob Marley"},
-  {q:"Doubt kills more dreams than failure ever will.",a:"Suzy Kassem"},
-  {q:"She is clothed in strength and dignity, and she laughs without fear of the future.",a:"Proverbs 31:25"},
-  {q:"With the right kind of coaching and determination you can accomplish anything.",a:"Reese Witherspoon"},
-  {q:"The most difficult thing is the decision to act. The rest is merely tenacity.",a:"Amelia Earhart"},
-  {q:"It does not matter how slowly you go as long as you do not stop.",a:"Confucius"},
-  {q:"We realize the importance of our voices only when we are silenced.",a:"Malala Yousafzai"},
-  {q:"I raise up my voice not so I can shout but so that those without a voice can be heard.",a:"Malala Yousafzai"},
-  {q:"One child, one teacher, one book, one pen can change the world.",a:"Malala Yousafzai"},
-  {q:"The future belongs to those who believe in the beauty of their dreams.",a:"Eleanor Roosevelt"},
+  {q:"Be yourself, everyone else is already taken.",a:"Oscar Wilde"},
   {q:"No one can make you feel inferior without your consent.",a:"Eleanor Roosevelt"},
-  {q:"You gain strength, courage, and confidence by every experience in which you really stop to look fear in the face.",a:"Eleanor Roosevelt"},
-  {q:"I am not afraid of storms, for I am learning how to sail my ship.",a:"Louisa May Alcott"},
-  {q:"Do one thing every day that scares you.",a:"Eleanor Roosevelt"},
-  {q:"You have to be willing to be misunderstood if you're going to innovate.",a:"Unknown"},
-  {q:"Be the change you wish to see in the world.",a:"Mahatma Gandhi"},
-  {q:"In the middle of difficulty lies opportunity.",a:"Albert Einstein"},
-  {q:"The only way to do great work is to love what you do.",a:"Steve Jobs"},
-  {q:"It always seems impossible until it's done.",a:"Nelson Mandela"},
-  {q:"What you do today can improve all your tomorrows.",a:"Ralph Marston"},
-  {q:"Small steps in the right direction can turn out to be the biggest step of your life.",a:"Unknown"},
-  {q:"Your life is your message to the world. Make sure it's inspiring.",a:"Unknown"},
-  {q:"Happiness is not something ready-made. It comes from your own actions.",a:"Dalai Lama"},
-  {q:"Courage doesn't mean you don't get afraid. Courage means you don't let fear stop you.",a:"Bethany Hamilton"},
-  {q:"You were born to be real, not to be perfect.",a:"Unknown"},
+  {q:"You are enough.",a:"Unknown"},
+  {q:"Doubt kills more dreams than failure ever will.",a:"Suzy Kassem"},
   {q:"The comeback is always stronger than the setback.",a:"Unknown"},
-  {q:"Storms make trees take deeper roots.",a:"Dolly Parton"},
-  {q:"Hard days are the best because that's when champions are made.",a:"Gabby Douglas"},
-  {q:"Success is not final, failure is not fatal: it is the courage to continue that counts.",a:"Winston Churchill"},
-  {q:"You don't have to be perfect to be amazing.",a:"Unknown"},
-  {q:"Make each day your masterpiece.",a:"John Wooden"},
-  {q:"Optimism is the faith that leads to achievement.",a:"Helen Keller"},
-  {q:"Alone we can do so little; together we can do so much.",a:"Helen Keller"},
-  {q:"Character cannot be developed in ease and quiet.",a:"Helen Keller"},
-  {q:"The best way to predict your future is to create it.",a:"Abraham Lincoln"},
-  {q:"Act as if what you do makes a difference. It does.",a:"William James"},
-  {q:"Life is not measured by the number of breaths we take, but by the moments that take our breath away.",a:"Maya Angelou"},
-  {q:"I've learned that people will forget what you said, but people will never forget how you made them feel.",a:"Maya Angelou"},
-  {q:"You can't use up creativity. The more you use, the more you have.",a:"Maya Angelou"},
-  {q:"Nothing will work unless you do.",a:"Maya Angelou"},
-  {q:"Try to be a rainbow in someone's cloud.",a:"Maya Angelou"},
-  {q:"You may not control all the events that happen to you, but you can decide not to be reduced by them.",a:"Maya Angelou"},
-  {q:"We delight in the beauty of the butterfly, but rarely admit the changes it has gone through to achieve that beauty.",a:"Maya Angelou"},
-  {q:"If you're always trying to be normal, you will never know how amazing you can be.",a:"Maya Angelou"},
-  {q:"There is no greater agony than bearing an untold story inside you.",a:"Maya Angelou"},
-  {q:"Pursue what catches your heart, not what catches your eyes.",a:"Roy T. Bennett"},
-  {q:"Don't be pushed around by the fears in your mind. Be led by the dreams in your heart.",a:"Roy T. Bennett"},
-  {q:"Be brave enough to live the life of your dreams according to your vision.",a:"Roy T. Bennett"},
-  {q:"The key to being happy is knowing you have the power to choose what to accept and what to let go.",a:"Dodinsky"},
-  {q:"She was unstoppable, not because she did not have failures or doubts, but because she continued on despite them.",a:"Beau Taplin"},
-  {q:"The woman who does not require validation from anyone is the most feared individual on the planet.",a:"Mohadesa Najumi"},
-  {q:"A girl should be two things: who and what she wants.",a:"Coco Chanel"},
-  {q:"I am not lucky. You know what I am? I am smart. I am talented. I take advantage of the opportunities that come my way.",a:"Shonda Rhimes"},
-  {q:"Think like a queen. A queen is not afraid to fail. Failure is another stepping stone to greatness.",a:"Oprah Winfrey"},
-  {q:"The biggest adventure you can take is to live the life of your dreams.",a:"Oprah Winfrey"},
-  {q:"Turn your wounds into wisdom.",a:"Oprah Winfrey"},
-  {q:"You are not a drop in the ocean. You are the entire ocean in a drop.",a:"Rumi"},
-  {q:"Let yourself be silently drawn by the strange pull of what you really love.",a:"Rumi"},
-  {q:"Yesterday I was clever, so I wanted to change the world. Today I am wise, so I am changing myself.",a:"Rumi"},
+  {q:"Stars can't shine without darkness.",a:"Unknown"},
+  {q:"You were born to stand out.",a:"Dr. Seuss"},
+  {q:"Be the change you wish to see in the world.",a:"Mahatma Gandhi"},
+  {q:"It always seems impossible until it's done.",a:"Nelson Mandela"},
+  {q:"She is clothed in strength and dignity.",a:"Proverbs 31:25"},
+  {q:"Courage is being scared but going anyway.",a:"Unknown"},
+  {q:"Fall seven times, stand up eight.",a:"Japanese Proverb"},
+  {q:"The only way out is through.",a:"Robert Frost"},
+  {q:"You are braver than you believe.",a:"A.A. Milne"},
+  {q:"Do something today your future self will thank you for.",a:"Unknown"},
+  {q:"Be a rainbow in someone else's cloud.",a:"Maya Angelou"},
+  {q:"Nothing is impossible — the word itself says I'm possible.",a:"Audrey Hepburn"},
+  {q:"Difficult roads often lead to beautiful destinations.",a:"Unknown"},
+  {q:"Salt and sugar look the same. Be careful who you trust.",a:"Unknown"},
+  {q:"Sunsets are proof that endings can be beautiful too.",a:"Unknown"},
+  {q:"Your light may not reach everyone, but it will reach those that are seeking it. Keep shining.",a:"Unknown"},
+  {q:"Your life will only change when you decide to make it happen.",a:"Unknown"},
+  {q:"A negative mind will never give you a positive life.",a:"Unknown"},
 ];
 
-// Pick a random quote once per page load using session index
-const SESSION_QUOTE = QUOTES[Math.floor(Math.random() * QUOTES.length)];
+const SESSION_QUOTE=QUOTES[Math.floor(Math.random()*QUOTES.length)];
 
-const KEY='habit_tracker_v2';
-let state={entries:{},habits:[],reminders:[],viewMonth:new Date().getMonth(),viewYear:new Date().getFullYear(),currentScore:5,habitRatings:{},habitNotes:{}};
+const KEY='bloom_v3';
+let state={entries:{},habits:[],reminders:[],reminderChecks:{},viewMonth:new Date().getMonth(),viewYear:new Date().getFullYear(),currentScore:5,habitRatings:{},habitNotes:{}};
 let trendChart=null;
-const _fired=new Set();
 
 function load(){
   try{
     const r=localStorage.getItem(KEY);
-    if(r){const s=JSON.parse(r);state.entries=s.entries||{};state.habits=s.habits||[];state.reminders=s.reminders||[];}
+    if(r){const s=JSON.parse(r);state.entries=s.entries||{};state.habits=s.habits||[];state.reminders=s.reminders||[];state.reminderChecks=s.reminderChecks||{};}
+    // Reset checks each day
+    const tk=todayKey();
+    if(state.reminderChecks._date!==tk){state.reminderChecks={_date:tk};}
   }catch(e){}
 }
 function save(){
-  try{localStorage.setItem(KEY,JSON.stringify({entries:state.entries,habits:state.habits,reminders:state.reminders}));}catch(e){}
+  try{localStorage.setItem(KEY,JSON.stringify({entries:state.entries,habits:state.habits,reminders:state.reminders,reminderChecks:state.reminderChecks}));}catch(e){}
 }
 function todayKey(){const d=new Date();return`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
 function fmtDate(k){const[y,m,d]=k.split('-');return new Date(+y,+m-1,+d).toLocaleDateString('en-CA',{weekday:'short',month:'short',day:'numeric'});}
@@ -370,10 +339,14 @@ function showSection(name,btn){
 
 /* OVERVIEW */
 function renderOverview(){
-  // Quote at top
+  // Quote
   const q=SESSION_QUOTE;
   document.getElementById('overview-quote').innerHTML=`<div class="quote-card-text">"${q.q}"</div><div class="quote-card-attr">— ${q.a}</div>`;
 
+  // Reminders at top — checkable, reset each day
+  renderOverviewReminders();
+
+  // Metrics
   const keys=Object.keys(state.entries).sort().reverse();
   const total=keys.length;
   const avg=total?(Math.round(keys.reduce((s,k)=>s+(state.entries[k].score||5),0)/total*10)/10):'—';
@@ -383,6 +356,8 @@ function renderOverview(){
     <div class="metric"><div class="metric-label">Avg. score</div><div class="metric-val">${avg}</div></div>
     <div class="metric"><div class="metric-label">Current streak</div><div class="metric-val">${streak}d</div></div>
     <div class="metric"><div class="metric-label">Habits tracked</div><div class="metric-val">${state.habits.length}</div></div>`;
+
+  // Weekly summaries
   const weeks=groupWeeks(keys.slice(0,28));
   let wkH=weeks.length?'':'<div class="chart-msg">No entries yet. Log your first day!</div>';
   weeks.forEach((wk,i)=>{
@@ -391,11 +366,40 @@ function renderOverview(){
     wkH+=`<div class="week-row"><span class="week-label">Wk ${weeks.length-i}</span><div class="week-dots">${dots}</div>${avg2!==null?`<span class="week-note">avg ${avg2}/10</span>`:''}</div>`;
   });
   document.getElementById('week-summaries').innerHTML=wkH;
+
+  // Recent entries
   const recent=keys.slice(0,5);
   let rH=recent.length?'':'<div class="chart-msg">No entries yet.</div>';
   recent.forEach(k=>{const e=state.entries[k];rH+=`<div class="entry-card" style="border-left-color:${stc(e.score||5)}" onclick="openEntry('${k}')"><div class="entry-date">${fmtDate(k)} · Score: ${e.score}/10</div><div class="entry-note">${e.notes?e.notes.substring(0,120)+(e.notes.length>120?'…':''):'<em style="color:var(--text-muted)">No notes</em>'}</div></div>`;});
   document.getElementById('recent-entries').innerHTML=rH;
 }
+
+function renderOverviewReminders(){
+  const card=document.getElementById('overview-reminders-card');
+  const list=document.getElementById('overview-reminder-list');
+  if(!state.reminders.length){card.style.display='none';return;}
+  card.style.display='';
+  list.innerHTML=state.reminders.map(r=>{
+    const checked=!!state.reminderChecks[r.id];
+    return`<div class="reminder-overview-item ${checked?'checked':''}" id="rovitem-${r.id}">
+      <button class="reminder-ov-check ${checked?'done':''}" onclick="toggleReminderCheck('${r.id}')" aria-label="Check off reminder">${checked?'&#10003;':''}</button>
+      <span class="reminder-ov-text">${r.text}</span>
+    </div>`;
+  }).join('');
+}
+
+function toggleReminderCheck(id){
+  state.reminderChecks[id]=!state.reminderChecks[id];
+  save();
+  // Update just that item without full re-render
+  const item=document.getElementById('rovitem-'+id);
+  const btn=item.querySelector('.reminder-ov-check');
+  const checked=state.reminderChecks[id];
+  item.classList.toggle('checked',checked);
+  btn.classList.toggle('done',checked);
+  btn.innerHTML=checked?'&#10003;':'';
+}
+
 function groupWeeks(keys){const sorted=[...keys].sort().reverse();const weeks=[];let wk=[];sorted.forEach((k,i)=>{wk.push(k);if(new Date(k).getDay()===0||i===sorted.length-1){weeks.push(wk);wk=[];}});if(wk.length)weeks.push(wk);return weeks.slice(0,4);}
 function calcStreak(){let s=0;const d=new Date();while(true){const k=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;if(!state.entries[k])break;s++;d.setDate(d.getDate()-1);}return s;}
 
@@ -417,8 +421,8 @@ function renderLog(){
       <div class="habit-check-info">
         <div class="habit-check-name">${h.name}</div>
         <div class="hspectrum" id="hspec-${h.id}">${hSpecHTML(h.id,r)}</div>
-        <div class="habit-note-field">
-          <textarea id="hnote-${h.id}" placeholder="Note for this habit (optional)..." onchange="setHabitNote('${h.id}',this.value)">${note}</textarea>
+        <div style="margin-top:6px;">
+          <textarea id="hnote-${h.id}" placeholder="Note for this habit..." style="min-height:44px;font-size:12px;padding:6px 8px;" onchange="setHabitNote('${h.id}',this.value)">${note}</textarea>
         </div>
       </div>
     </div>`;
@@ -446,16 +450,12 @@ function toggleHabit(hid){
   const spec=document.getElementById('hspec-'+hid);if(spec)spec.innerHTML=hSpecHTML(hid,r);
 }
 function saveEntry(){
-  // Collect latest habit notes from textareas
-  state.habits.forEach(h=>{
-    const ta=document.getElementById('hnote-'+h.id);
-    if(ta)state.habitNotes[h.id]=ta.value;
-  });
+  state.habits.forEach(h=>{const ta=document.getElementById('hnote-'+h.id);if(ta)state.habitNotes[h.id]=ta.value;});
   state.entries[todayKey()]={score:state.currentScore,notes:document.getElementById('day-notes').value.trim(),habitRatings:{...state.habitRatings},habitNotes:{...state.habitNotes}};
   save();showToast('Entry saved.');
 }
 
-/* ENTRY MODAL — habits clickable to show note */
+/* ENTRY MODAL */
 function openEntry(key){
   const e=state.entries[key];
   const hH=state.habits.length?`<div style="margin-bottom:.75rem;">
@@ -463,12 +463,11 @@ function openEntry(key){
     ${state.habits.map(h=>{
       const r=e.habitRatings?e.habitRatings[h.id]||0:0;
       const note=e.habitNotes?e.habitNotes[h.id]||'':'';
-      const dotCol=r>0?stc(r):'var(--surface2)';
       return`<div class="habit-modal-row" onclick="toggleHabitNote('hnd-${key.replace(/-/g,'')}-${h.id}')">
-        <div class="habit-modal-dot" style="background:${dotCol};border:0.5px solid var(--border);"></div>
+        <div class="habit-modal-dot" style="background:${r>0?stc(r):'var(--surface2)'};border:0.5px solid var(--border);"></div>
         <div class="habit-modal-info">
           <div class="habit-modal-name">${h.name}</div>
-          ${note?`<div class="habit-modal-note" id="hnd-${key.replace(/-/g,'')}-${h.id}" style="display:none;">${note}</div>`:''}
+          ${note?`<div class="habit-modal-note" id="hnd-${key.replace(/-/g,'')}-${h.id}">${note}</div>`:''}
         </div>
         <div class="habit-modal-score">${r>0?r+'/10':'—'}</div>
       </div>`;
@@ -486,10 +485,7 @@ function openEntry(key){
     </div>
   </div></div>`;
 }
-function toggleHabitNote(id){
-  const el=document.getElementById(id);
-  if(el)el.style.display=el.style.display==='none'?'block':'none';
-}
+function toggleHabitNote(id){const el=document.getElementById(id);if(el)el.style.display=el.style.display==='block'?'none':'block';}
 function deleteEntry(key){if(confirm('Delete this entry?')){delete state.entries[key];save();closeModal();renderOverview();}}
 function closeModal(){document.getElementById('modal-container').innerHTML='';}
 
@@ -522,11 +518,7 @@ function renderHabitBreakdown(mn,yr,dim){
     const avg=ratings.length?(Math.round(ratings.reduce((s,x)=>s+x.r,0)/ratings.length*10)/10):null;
     const pct=avg?Math.round((avg/10)*100):0;
     const dots=ratings.map(x=>`<div class="hpr-dot" style="background:${stc(x.r)}" title="Day ${x.d}: ${x.r}/10"></div>`).join('');
-    html+=`<div class="hpr">
-      <div class="hpr-header"><span class="hpr-name">${h.name}</span><span class="hpr-avg">${avg?`avg ${avg}/10 · ${ratings.length} day${ratings.length!==1?'s':''}`:'No entries this month'}</span></div>
-      <div class="hpr-bar-bg"><div class="hpr-bar-fill" style="width:${pct}%;background:${avg?stc(avg):'var(--surface2)'};"></div></div>
-      <div class="hpr-dots">${dots}</div>
-    </div>`;
+    html+=`<div class="hpr"><div class="hpr-header"><span class="hpr-name">${h.name}</span><span class="hpr-avg">${avg?`avg ${avg}/10 · ${ratings.length} day${ratings.length!==1?'s':''}`:'No entries this month'}</span></div><div class="hpr-bar-bg"><div class="hpr-bar-fill" style="width:${pct}%;background:${avg?stc(avg):'var(--surface2)'};"></div></div><div class="hpr-dots">${dots}</div></div>`;
   });
   bd.innerHTML=html;
 }
@@ -541,79 +533,59 @@ function calcHabitStreak(id){let s=0;const d=new Date();while(true){const k=`${d
 function addHabit(){const inp=document.getElementById('new-habit-name'),name=inp.value.trim();if(!name||state.habits.length>=10)return;state.habits.push({id:'h'+Date.now(),name});inp.value='';save();renderHabits();}
 function removeHabit(id){state.habits=state.habits.filter(h=>h.id!==id);save();renderHabits();}
 
-/* REMINDERS */
+/* REMINDERS TAB */
 function renderReminders(){
   document.getElementById('reminder-list').innerHTML=!state.reminders.length?'<div style="font-size:13px;color:var(--text-muted);padding:.5rem 0;">No reminders yet.</div>':state.reminders.map(r=>`
     <div class="reminder-item">
       <i class="ti ti-bell-ringing" style="color:var(--sage);font-size:15px"></i>
-      <span class="reminder-text">${r.text}</span>
-      <span class="reminder-time-tag">${r.time||'—'}</span>
+      <span class="reminder-item-text">${r.text}</span>
       <button class="btn small" onclick="editReminder('${r.id}')"><i class="ti ti-edit"></i></button>
       <button class="btn danger small" onclick="removeReminder('${r.id}')"><i class="ti ti-trash"></i></button>
     </div>`).join('');
 }
 function addReminder(){
   const text=document.getElementById('new-reminder').value.trim();
-  const time=document.getElementById('new-reminder-time').value;
   if(!text)return;
-  state.reminders.push({id:'r'+Date.now(),text,time:time||''});
+  state.reminders.push({id:'r'+Date.now(),text});
   document.getElementById('new-reminder').value='';
-  document.getElementById('new-reminder-time').value='';
   save();renderReminders();
+  renderOverviewReminders();
 }
-function removeReminder(id){state.reminders=state.reminders.filter(r=>r.id!==id);save();renderReminders();}
+function removeReminder(id){
+  state.reminders=state.reminders.filter(r=>r.id!==id);
+  delete state.reminderChecks[id];
+  save();renderReminders();renderOverviewReminders();
+}
 function editReminder(id){
   const r=state.reminders.find(x=>x.id===id);if(!r)return;
   document.getElementById('modal-container').innerHTML=`<div class="modal-bg" onclick="if(event.target===this)closeModal()"><div class="modal">
     <div class="modal-title">Edit reminder</div>
     <div class="form-row"><label class="form-label">Text</label><textarea id="edit-rem-text" style="min-height:60px">${r.text}</textarea></div>
-    <div class="form-row"><label class="form-label">Time</label><input type="time" id="edit-rem-time" value="${r.time||''}"/></div>
     <div style="display:flex;justify-content:flex-end;gap:8px;"><button class="btn small" onclick="closeModal()">Cancel</button><button class="btn primary small" onclick="saveReminder('${id}')">Save</button></div>
   </div></div>`;
 }
 function saveReminder(id){
   const text=document.getElementById('edit-rem-text').value.trim();
-  const time=document.getElementById('edit-rem-time').value;
   if(!text)return;
-  const r=state.reminders.find(x=>x.id===id);if(r){r.text=text;r.time=time||'';save();}
-  closeModal();renderReminders();
-}
-
-/* TIMED REMINDER POPUPS */
-function checkReminders(){
-  const now=new Date();
-  const nowStr=`${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}`;
-  const tk=todayKey();
-  state.reminders.forEach(r=>{
-    if(!r.time)return;
-    const fk=`${tk}-${r.id}-${r.time}`;
-    if(r.time===nowStr&&!_fired.has(fk)){_fired.add(fk);showReminderPopup(r);}
-  });
-}
-function showReminderPopup(r){
-  const pid='rp'+Date.now();
-  const el=document.createElement('div');
-  el.className='reminder-popup';el.id=pid;
-  el.innerHTML=`<i class="ti ti-bell-ringing rp-icon"></i><div class="rp-text"><strong>${r.time}</strong> &middot; ${r.text}</div><button class="rp-close" onclick="this.closest('.reminder-popup').remove()">&#10005;</button>`;
-  document.getElementById('reminder-popups').appendChild(el);
-  setTimeout(()=>{if(document.getElementById(pid))document.getElementById(pid).remove();},15000);
+  const r=state.reminders.find(x=>x.id===id);if(r){r.text=text;save();}
+  closeModal();renderReminders();renderOverviewReminders();
 }
 
 /* EXPORT / IMPORT */
 function exportData(){
-  const payload={exportedAt:new Date().toISOString(),version:2,entries:state.entries,habits:state.habits,reminders:state.reminders};
+  const payload={exportedAt:new Date().toISOString(),version:3,entries:state.entries,habits:state.habits,reminders:state.reminders};
   const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
   const url=URL.createObjectURL(blob);
   const a=document.createElement('a');
-  a.href=url;a.download=`habit-tracker-backup-${new Date().toISOString().slice(0,10)}.json`;
+  a.href=url;a.download=`bloom-backup-${new Date().toISOString().slice(0,10)}.json`;
   document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
   showToast('Backup downloaded.');
 }
-function handleFileSelect(event){const file=event.target.files[0];if(file)processImportFile(file);event.target.value='';}
-function handleFileDrop(event){
-  event.preventDefault();document.getElementById('import-drop').classList.remove('dragover');
-  const file=event.dataTransfer.files[0];
-  if(file&&file.name.endsWith('.json'))processImportFile(file);
+function handleFileSelect(e){const f=e.target.files[0];if(f)processImportFile(f);e.target.value='';}
+function handleFileDrop(e){
+  e.preventDefault();document.getElementById('import-drop').classList.remove('dragover');
+  const f=e.dataTransfer.files[0];
+  if(f&&f.name.endsWith('.json'))processImportFile(f);
   else setImportStatus('error','Please drop a .json file.');
 }
 function processImportFile(file){
@@ -624,7 +596,7 @@ function processImportFile(file){
       if(!data.entries||!data.habits){setImportStatus('error','Invalid backup file.');return;}
       const ec=Object.keys(data.entries).length,hc=data.habits.length;
       setImportStatus('confirm',`Found ${ec} entries and ${hc} habits. This will replace your current data.`,data);
-    }catch(err){setImportStatus('error','Could not read this file. Make sure it is a valid backup.');}
+    }catch(err){setImportStatus('error','Could not read this file.');}
   };
   reader.readAsText(file);
 }
@@ -642,7 +614,7 @@ function setImportStatus(type,msg,data){
   }else if(type==='success'){el.innerHTML=`<div style="margin-top:.75rem;padding:.75rem 1rem;background:rgba(46,139,87,.08);border-radius:var(--r-md);border:0.5px solid var(--sage);font-size:13px;color:var(--sage);">${msg}</div>`;}
 }
 function confirmImport(data){
-  state.entries=data.entries||{};state.habits=data.habits||[];state.reminders=data.reminders||[];
+  state.entries=data.entries||{};state.habits=data.habits||[];state.reminders=data.reminders||[];state.reminderChecks={_date:todayKey()};
   save();setImportStatus('success','Data imported successfully.');showToast('Import complete.');
 }
 
@@ -651,8 +623,6 @@ function showToast(msg){const t=document.createElement('div');t.className='toast
 /* INIT */
 load();
 renderOverview();
-setInterval(checkReminders,30000);
-checkReminders();
 </script>
 </body>
 </html>
